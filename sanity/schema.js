@@ -4,7 +4,8 @@
 // import author from './schemas/author'
 
 import majorPrograms from "./schemas/majorPrograms";
+import virtualTour from "./schemas/virtualTour";
 
 export const schema = {
-  types: [majorPrograms],
+  types: [majorPrograms,virtualTour],
 }

@@ -1,11 +1,23 @@
+
+
 import Navbar from "./(components)/navbar/navbar"
 import FasilitiesCard from "./(components)/facilitiesCard/facilitiesCard"
 import Imeges from "./(components)/imegesCard/imegesCard"
 import TestimonialCard from "./(components)/testimonialCard/testimonialCard"
 import Card from "./(components)/card/card"
 import { client } from "@/sanity/lib/client"
+// import {urlfor} from "@sanity/"
+// import { Image } from "sanity"
 
 
+
+ 
+
+const fetchServices1 = async ()=>{
+    const majorProgramss = await client.fetch(`*[_type == "imageWithTitle"]`,{},{cache:'no-cache',});
+    return majorProgramss
+}
+ 
 const fetchServices = async ()=> {
     const majorPrograms = await client.fetch(`*[_type == "majorPrograms"]`,{},{cache:'no-cache',});
     return majorPrograms
@@ -14,6 +26,7 @@ const fetchServices = async ()=> {
 // import Image from "next/image"
 async function Home() {
    const majorPrograms = await fetchServices();
+   const imageTitles = await fetchServices1();
     return (
         <>
             <section className="header">
@@ -63,10 +76,17 @@ async function Home() {
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
 
                 <div className="row">
+                    {
+                        imageTitles.map((imageWithTitle)=>{
+                            return (
+                                <Imeges heading={imageWithTitle.title} src={imageWithTitle.image} />  
 
-                    <Imeges heading="DELHI" src="/Campus1.png"  />  
+                            )
+                            })
+                    }
+                    {/* <Imeges heading="DELHI" src="/Campus1.png"  />  
                     <Imeges heading="HYDERABAD" src="/Campus2.png" />  
-                    <Imeges heading="MUMBAI" src="/Campus3.png" />  
+                    <Imeges heading="MUMBAI" src="/Campus3.png" />   */}
                 </div>
             </section>
 
