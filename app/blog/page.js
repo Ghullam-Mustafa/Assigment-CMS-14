@@ -10,11 +10,17 @@ const fetchServices = async () => {
     return blog;
 };
 
+const fetchServices2 = async () => {
+    const post = await client.fetch(`*[_type == "postCatageries"]`, {}, { cache: 'no-cache' });
+    return post;
+};
+
 // import Navbar from "../(components)/navbar/navbar";
 import Image from "next/image";
 
 async function Blog() {
     const blog = await fetchServices();
+    const post = await fetchServices2()
     return (
         <>
             <Header title="OUR POST" />
@@ -75,7 +81,19 @@ async function Blog() {
 
                     <div className="blog-right">
                         <h3>Post Categories</h3>
-                        <div>
+                        {
+                            post.map((post) => {
+                                return (
+                                    <>
+                                        <div>
+                                            <span>{post.title}</span>
+                                            <span>{post.number}</span>
+                                        </div>
+                                    </>
+                                )
+                            })
+                        }
+                        {/* <div>
                             <span>Business Analytics</span>
                             <span>12</span>
                         </div>
@@ -94,7 +112,7 @@ async function Blog() {
                         <div>
                             <span>Full Stack</span>
                             <span>20</span>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>
