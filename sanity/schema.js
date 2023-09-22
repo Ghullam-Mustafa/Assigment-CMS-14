@@ -3,6 +3,7 @@
 // import post from './schemas/post'
 // import author from './schemas/author'
 
+import about from "./schemas/about";
 import bestCourse from "./schemas/bestCourse";
 import blogs from "./schemas/blogs";
 import courseWeOffer from "./schemas/courseWeOffer";
@@ -15,5 +16,5 @@ import studentsSays from "./schemas/studentsSays";
 import virtualTour from "./schemas/virtualTour";
 
 export const schema = {
-  types: [majorPrograms,virtualTour,ourFacilities,studentsSays,imageHeading,header,courseWeOffer,bestCourse,blogs,postCatageries],
+  types: [majorPrograms,virtualTour,ourFacilities,studentsSays,imageHeading,header,courseWeOffer,bestCourse,blogs,postCatageries,about],
 }
