@@ -7,7 +7,7 @@ import TestimonialCard from "./(components)/testimonialCard/testimonialCard"
 import Card from "./(components)/card/card"
 import { client } from "@/sanity/lib/client"
 import { urlForImage } from "@/sanity/lib/image"
-// import imageUrlBuilder from '@sanity/image-url'
+import imageUrlBuilder from '@sanity/image-url'
 import buildeimage from '@sanity/image-url'
 buildeimage
 // import {urlfor} from "@sanity/"
@@ -42,9 +42,9 @@ const fetchServices = async () => {
     const majorPrograms = await client.fetch(`*[_type == "majorPrograms"]`, {}, { cache: 'no-cache', });
     return majorPrograms
 }
-function urlFor(source) {
-    return buildeimage(source)
-}
+// function urlFor(source) {
+//     return buildeimage(source)
+// }
 // import Image from "next/image"
 async function Home() {
     const header = await fetchServices5();
