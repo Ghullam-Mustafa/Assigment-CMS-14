@@ -1,9 +1,20 @@
 // import "./coursesStyle.css"
+import { client } from "@/sanity/lib/client"
+import { urlForImage } from "@/sanity/lib/image"
 
 import Header from '../(components)/header/header'
 import TextCard from './(components)/textCard'
 import ImageCard from './(components)/imageCard'
-function Courses() {
+
+
+const fetchServices = async () => {
+  const course = await client.fetch(`*[_type == "courseWeOffer"]`, {}, { cache: 'no-cache' });
+  return course
+}
+
+
+async function Courses() {
+  const course = await fetchServices();
   return (
     <>
       <Header title="OUR COURSES" />
@@ -11,11 +22,21 @@ function Courses() {
       <section className="course">
         <h1>Course We Offer</h1>
         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-
         <div className="row">
-          <TextCard title="Undergraduate Programs" />
-          <TextCard title="Graduate Programs" />
-          <TextCard title="Adult Learning & Degree Completion" />
+          {
+            course.map((card) => {
+              return (
+                <>
+
+                  <TextCard title={card.title} description={card.description} />
+                  {/* <TextCard title="Graduate Programs" />
+          <TextCard title="Adult Learning & Degree Completion" /> */}
+
+
+                </>
+              )
+            })
+          }
         </div>
       </section>
 
