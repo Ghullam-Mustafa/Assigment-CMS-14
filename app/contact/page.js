@@ -8,8 +8,14 @@ const fetchServices = async () => {
   return email;
 };
 
+const fetchServices2 = async () => {
+  const phone = await client.fetch(`*[_type == "contactPhone"]`, {}, { cache: 'no-cache' });
+  return phone;
+};
+
 async function Contact() {
   const email = await fetchServices();
+  const phone = await fetchServices2();
   return (
     <>
       <Header title="Contact" />
@@ -24,10 +30,23 @@ async function Contact() {
         <div className="row">
           <div className="content-col">
             {
+              phone.map((phone) => {
+                return (
+                  <div>
+                    <i className="fa fa-phone"></i>
+                    <span>
+                      <h5>{phone.title}</h5>
+                      <p>{phone.description}</p>
+                    </span>
+                  </div>
+                )
+              })
+            }
+            {
               email.map((email) => {
                 return (
                   <>
-                    
+
                     <div>
                       <i className="fa fa-envelope"></i>
                       <span>
@@ -50,13 +69,13 @@ async function Contact() {
                 <p>Ghaziabad, Uttar Pradesh, IN</p>
               </span>
             </div>
-            <div>
+            {/* <div>
               <i className="fa fa-phone"></i>
               <span>
                 <h5>+91 7445546525</h5>
                 <p>Monday To Saturday, 9AM To 6PM</p>
               </span>
-            </div>
+            </div> */}
             {/* <div>
               <i className="fa fa-envelope"></i>
               <span>

@@ -7,6 +7,7 @@ import about from "./schemas/about";
 import bestCourse from "./schemas/bestCourse";
 import blogs from "./schemas/blogs";
 import contactEmail from "./schemas/contactEmail";
+import contactPhone from "./schemas/contactPhone";
 // import contact from "./schemas/contact";
 import courseWeOffer from "./schemas/courseWeOffer";
 import header from "./schemas/header";
@@ -18,5 +19,16 @@ import studentsSays from "./schemas/studentsSays";
 import virtualTour from "./schemas/virtualTour";
 
 export const schema = {
-  types: [majorPrograms,virtualTour,ourFacilities,studentsSays,imageHeading,header,courseWeOffer,bestCourse,blogs,postCatageries,about,contactEmail],
+  types: [majorPrograms,
+    virtualTour,
+    ourFacilities,studentsSays
+    ,imageHeading
+    ,header,
+     courseWeOffer
+     ,bestCourse
+     ,blogs
+     ,postCatageries
+     ,about
+     ,contactEmail
+     ,contactPhone],
 }
