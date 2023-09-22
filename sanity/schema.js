@@ -6,6 +6,7 @@
 import about from "./schemas/about";
 import bestCourse from "./schemas/bestCourse";
 import blogs from "./schemas/blogs";
+import contactAddress from "./schemas/contactAddress";
 import contactEmail from "./schemas/contactEmail";
 import contactPhone from "./schemas/contactPhone";
 // import contact from "./schemas/contact";
@@ -30,5 +31,6 @@ export const schema = {
      ,postCatageries
      ,about
      ,contactEmail
-     ,contactPhone],
+     ,contactPhone,
+    contactAddress],
 }
