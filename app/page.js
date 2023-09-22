@@ -13,6 +13,11 @@ buildeimage
 // import {urlfor} from "@sanity/"
 // import { Image } from "sanity"
 
+const fetchServices4 = async () => {
+    const heading = await client.fetch(`*[_type == "imageHeading"]`, {}, { cache: 'no-cache' });
+    return heading
+}
+
 const fetchServices3 = async () => {
     const students = await client.fetch(`*[_type == "studentsSays"]`, {}, { cache: 'no-cache' });
     return students
@@ -45,6 +50,7 @@ async function Home() {
     const imageWithTitle = await fetchServices1();
     console.log("image with title",imageWithTitle.image)
     const facilitie = await fetchServices2();
+    const heading = await fetchServices4();
     return (
         <>
             <section className="header">
@@ -131,7 +137,7 @@ async function Home() {
                                 <>
                                     <img src={facilitie.url} />
 
-                                    <FasilitiesCard src={card.image} heading={card.title} description={card.description} />
+                                    <FasilitiesCard src={urlForImage(card.image).url()} heading={card.title} description={card.description} />
                                 </>
                             )
                         })
@@ -154,7 +160,7 @@ async function Home() {
                     {
                         student.map((card) => {
                             return (
-                                <TestimonialCard name={card.studentName} src={card.image} description={card.description} />
+                                <TestimonialCard name={card.studentName} src={urlForImage(card.image).url()} description={card.description} />
 
                             )
                         })
@@ -165,7 +171,14 @@ async function Home() {
                 </div>
 
                 <section className="cta">
-                    <h1>GET READY FOR A BRIGHT FUTURE</h1>
+                    {
+                        heading.map((heading)=>{
+                            return (
+                                <h1>{heading.title}</h1>
+                            )
+                        })
+                    }
+                   
                     <a className="hero_btn">CONTACT US</a>
                 </section>
             </section>
