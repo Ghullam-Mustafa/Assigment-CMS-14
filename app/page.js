@@ -6,35 +6,45 @@ import Imeges from "./(components)/imegesCard/imegesCard"
 import TestimonialCard from "./(components)/testimonialCard/testimonialCard"
 import Card from "./(components)/card/card"
 import { client } from "@/sanity/lib/client"
+import { urlForImage } from "@/sanity/lib/image"
+import imageUrlBuilder from '@sanity/image-url'
+import buildeimage from '@sanity/image-url'
+buildeimage
 // import {urlfor} from "@sanity/"
 // import { Image } from "sanity"
 
-const fetchServices3 = async ()=>{
-    const students =await client.fetch(`*[_type == "studentsSays"]`,{},{cache:'no-cache'});
+const fetchServices3 = async () => {
+    const students = await client.fetch(`*[_type == "studentsSays"]`, {}, { cache: 'no-cache' });
     return students
 }
 
-const fetchServices2 = async ()=>{
-    const facilities = await client.fetch(`*[_type == "ourFacilities"]`,{},{cache:'no-cache',});
+const fetchServices2 = async () => {
+    const facilities = await client.fetch(`*[_type == "ourFacilities"]`, {}, { cache: 'no-cache', });
     return facilities
 }
 
-const fetchServices1 = async ()=>{
-    const majorProgramss = await client.fetch(`*[_type == "imageWithTitle"]`,{},{cache:'no-cache',});
-    return majorProgramss
-}
- 
-const fetchServices = async ()=> {
-    const majorPrograms = await client.fetch(`*[_type == "majorPrograms"]`,{},{cache:'no-cache',});
-    return majorPrograms
+const fetchServices1 = async () => {
+    const imageWithTitle = await client.fetch(`*[_type == "imageWithTitle"]`, {}, { cache: 'no-cache', });
+    return imageWithTitle
 }
 
+const fetchServices = async () => {
+    const majorPrograms = await client.fetch(`*[_type == "majorPrograms"]`, {}, { cache: 'no-cache', });
+    return majorPrograms
+}
+function urlFor(source) {
+    return buildeimage(source)
+}
 // import Image from "next/image"
 async function Home() {
+    const builder = imageUrlBuilder(client)
+
     const student = await fetchServices3();
-   const majorPrograms = await fetchServices();
-   const imageTitles = await fetchServices1();
-   const facilitie = await fetchServices2();
+    const majorPrograms = await fetchServices();
+    console.log(majorPrograms);
+    const imageWithTitle = await fetchServices1();
+    console.log("image with title",imageWithTitle.image)
+    const facilitie = await fetchServices2();
     return (
         <>
             <section className="header">
@@ -61,9 +71,11 @@ async function Home() {
 
                 <div className="row">
                     {
-                        majorPrograms.map((majorProgram)=>{
-                            return(
-                                <Card heading={majorProgram.title} description={majorProgram.description} />
+                        majorPrograms.map((majorProgram) => {
+                            return (
+                                <>
+                                    <Card heading={majorProgram.title} description={majorProgram.description} />
+                                </>
 
                             )
                         })
@@ -85,14 +97,18 @@ async function Home() {
 
                 <div className="row">
                     {
-                        imageTitles.map((imageWithTitle)=>{
+                        imageWithTitle.map((imageWithTitle) => {
                             return (
-                                // <Imeges heading={imageWithTitle.title} src={imageWithTitle.image.asset.url} /> 
-                                <Imeges heading={imageWithTitle.title} src={imageWithTitle.image.asset} />
- 
+                                <>
+
+                                    {/* <img src={imageWithTitle.url} />/ */}
+
+                                    {/* // <Imeges heading={imageWithTitle.title} src={imageWithTitle.image.asset.url} />  */}
+                                    <Imeges heading={imageWithTitle.title} src={urlForImage(imageWithTitle.image).url()} />
+                                </>
 
                             )
-                            })
+                        })
                     }
                     {/* <Imeges heading="DELHI" src="/Campus1.png"  />  
                     <Imeges heading="HYDERABAD" src="/Campus2.png" />  
@@ -110,10 +126,13 @@ async function Home() {
 
                 <div className="row">
                     {
-                        facilitie.map((card)=>{
-                            return(
-                                <FasilitiesCard src={card.image}  heading={card.title} description={card.description}/>
-   
+                        facilitie.map((card) => {
+                            return (
+                                <>
+                                    <img src={facilitie.url} />
+
+                                    <FasilitiesCard src={card.image} heading={card.title} description={card.description} />
+                                </>
                             )
                         })
                     }
@@ -133,9 +152,9 @@ async function Home() {
 
                 <div className="row">
                     {
-                        student.map((card)=>{
-                            return(
-                                <TestimonialCard  name={card.studentName} src={card.image} description={card.description} />
+                        student.map((card) => {
+                            return (
+                                <TestimonialCard name={card.studentName} src={card.image} description={card.description} />
 
                             )
                         })
@@ -147,7 +166,7 @@ async function Home() {
 
                 <section className="cta">
                     <h1>GET READY FOR A BRIGHT FUTURE</h1>
-                    <a  className="hero_btn">CONTACT US</a>
+                    <a className="hero_btn">CONTACT US</a>
                 </section>
             </section>
         </>
