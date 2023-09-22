@@ -4,8 +4,10 @@
 // import author from './schemas/author'
 
 import majorPrograms from "./schemas/majorPrograms";
+import ourFacilities from "./schemas/ourFacilities";
+import studentsSays from "./schemas/studentsSays";
 import virtualTour from "./schemas/virtualTour";
 
 export const schema = {
-  types: [majorPrograms,virtualTour],
+  types: [majorPrograms,virtualTour,ourFacilities,studentsSays],
 }

@@ -9,9 +9,15 @@ import { client } from "@/sanity/lib/client"
 // import {urlfor} from "@sanity/"
 // import { Image } from "sanity"
 
+const fetchServices3 = async ()=>{
+    const students =await client.fetch(`*[_type == "studentsSays"]`,{},{cache:'no-cache'});
+    return students
+}
 
-
- 
+const fetchServices2 = async ()=>{
+    const facilities = await client.fetch(`*[_type == "ourFacilities"]`,{},{cache:'no-cache',});
+    return facilities
+}
 
 const fetchServices1 = async ()=>{
     const majorProgramss = await client.fetch(`*[_type == "imageWithTitle"]`,{},{cache:'no-cache',});
@@ -25,8 +31,10 @@ const fetchServices = async ()=> {
 
 // import Image from "next/image"
 async function Home() {
+    const student = await fetchServices3();
    const majorPrograms = await fetchServices();
    const imageTitles = await fetchServices1();
+   const facilitie = await fetchServices2();
     return (
         <>
             <section className="header">
@@ -79,7 +87,9 @@ async function Home() {
                     {
                         imageTitles.map((imageWithTitle)=>{
                             return (
-                                <Imeges heading={imageWithTitle.title} src={imageWithTitle.image} />  
+                                // <Imeges heading={imageWithTitle.title} src={imageWithTitle.image.asset.url} /> 
+                                <Imeges heading={imageWithTitle.title} src={imageWithTitle.image.asset} />
+ 
 
                             )
                             })
@@ -99,9 +109,17 @@ async function Home() {
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
 
                 <div className="row">
-                    <FasilitiesCard src="/libary.png"   heading="Best Libary"/> 
+                    {
+                        facilitie.map((card)=>{
+                            return(
+                                <FasilitiesCard src={card.image}  heading={card.title} description={card.description}/>
+   
+                            )
+                        })
+                    }
+                    {/* <FasilitiesCard src="/libary.png"   heading="Best Libary"/> 
                     <FasilitiesCard src="/playground.png" heading="Athletics" />
-                    <FasilitiesCard src="/food.png" heading="Tasty and Healthy Food" />
+                    <FasilitiesCard src="/food.png" heading="Tasty and Healthy Food" /> */}
                 </div>
             </section>
 
@@ -114,8 +132,16 @@ async function Home() {
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
 
                 <div className="row">
-                    <TestimonialCard src="/user.png" />
-                    <TestimonialCard src="/user.png" />
+                    {
+                        student.map((card)=>{
+                            return(
+                                <TestimonialCard  name={card.studentName} src={card.image} description={card.description} />
+
+                            )
+                        })
+                    }
+                    {/* <TestimonialCard src="/user.png" />
+                    <TestimonialCard src="/user.png" /> */}
 
                 </div>
 
